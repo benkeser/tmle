@@ -670,7 +670,7 @@ tmleMSM <- function(Y,A,W,V,T=rep(1,length(Y)), Delta=rep(1, length(Y)), MSM, v=
     	if(family=="binomial"){
     		mAV <- plogis(cbind(covar.MSMA0 %*% psi.Qstar, covar.MSMA1 %*% psi.Qstar))
     	} else {
-    		mAV <- matrix(1, nrow=nrow(covar.MSMA0), ncol=2)
+    		mAV <- cbind(covar.MSMA0 %*% psi.Qstar, covar.MSMA1 %*% psi.Qstar)
     	}
     	colnames(mAV) <- c("m0V", "m1V")
     	sigma <- calcSigma(hAV, gAVW, Y, Qstar, mAV, covar.MSM, covar.MSMA0, covar.MSMA1, I.V, Delta, ub, id, family)/n.id
