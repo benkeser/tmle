@@ -571,7 +571,7 @@ loss.prev <- Inf
  		iter <- iter + 1
  		#print(psi.prev)
  	}
- 	 	return(list(psi = psi.prev, IC = IC.prev, conv = loss.prev < loss.cur))
+ 	 	return(list(psi = psi.prev, IC = IC.prev, conv = loss.prev < loss.cur, Q = Q))
  }
 
 # TMLE for Marginal Structural Models
@@ -2047,7 +2047,8 @@ tmle <- function(Y,A,W, Z=NULL, Delta=rep(1,length(Y)),
 				}
 				ATT$var.psi <- var(IC.ATT)/n.id
 				ATT$CI <- c(ATT$psi -mult *sqrt(ATT$var.psi), ATT$psi +mult *sqrt(ATT$var.psi))
-				ATT$pvalue <- 2*pnorm(-abs(ATT$psi/sqrt(ATT$var.psi)))	
+				ATT$pvalue <- 2*pnorm(-abs(ATT$psi/sqrt(ATT$var.psi)))
+				ATT$Q <- res.ATT$Q
 			}
 	        				  
         	if(!(inherits(res.ATC, "try-error"))){
@@ -2061,6 +2062,7 @@ tmle <- function(Y,A,W, Z=NULL, Delta=rep(1,length(Y)),
 				ATC$var.psi <- var(IC.ATC)/n.id
 				ATC$CI <- c(ATC$psi -mult *sqrt(ATC$var.psi), ATC$psi +mult *sqrt(ATC$var.psi))
 				ATC$pvalue <- 2*pnorm(-abs(ATC$psi/sqrt(ATC$var.psi)))	
+				ATC$Q <- res.ATC$Q
 			}
 			res$ATT <- ATT
 		 	res$ATC <- ATC
